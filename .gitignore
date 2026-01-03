@@ -13,6 +13,7 @@ __pycache__/
 
 # Runtime logs
 logs/
+*.log
 
 # Build artifacts / installers (often >100MB)
 dist/
