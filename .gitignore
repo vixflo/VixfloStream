@@ -1,0 +1,26 @@
+.venv/
+downloads/
+__pycache__/
+*.pyc
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+
+# Safety: never commit git recovery backups
+.git_corrupt_*/
+
+# Runtime logs
+logs/
+
+# Build artifacts / installers (often >100MB)
+dist/
+build/
+desktop-electron/dist/
+
+# Node dependencies
+desktop-electron/node_modules/
+
+# Bundled ffmpeg distribution (large; keep out of source repo)
+ffmpeg/

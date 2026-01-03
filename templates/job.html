@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ app_brand_name }} - {{ app_product_name }} - V {{ app_version }}</title>
+    <link rel="icon" href="{{ root_path }}/assets/app-icon.ico" />
+    <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+  </head>
+  <body data-root-path="{{ root_path }}" data-job-id="{{ job.id }}">
+    <main class="container" aria-labelledby="page-title">
+      <header class="brand">
+        <p class="kicker">{{ app_brand_name }}</p>
+        <h1 id="page-title" class="title">{{ app_product_name }}</h1>
+        <p class="subtitle">Status descărcare — urmărește progresul și descarcă fișierul când e gata.</p>
+      </header>
+
+      <div class="card" role="status" aria-live="polite" aria-atomic="true">
+        <p><strong>ID:</strong> <span class="mono">{{ job.id }}</span></p>
+        <p><strong>Tip:</strong> {{ job.download_type }}{% if job.download_type == 'audio' %} ({{ job.audio_format }}){% endif %}</p>
+        <p>
+          <strong>Status:</strong>
+          <span id="status" class="status-pill" data-status="{{ job.status }}">{{ job.status }}</span>
+        </p>
+
+        <div id="done" class="hidden">
+          <p><strong>Fișier gata.</strong></p>
+          <p class="muted" id="filename"></p>
+          <p>
+            <a id="filelink" class="btn btn-primary" href="#">
+              <span class="btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 3v10m0 0l4-4m-4 4l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              Descarcă
+            </a>
+          </p>
+        </div>
+
+        <div id="err" class="hidden" role="alert">
+          <p><strong>Eroare:</strong></p>
+          <pre id="errmsg"></pre>
+        </div>
+
+        <p class="hint">Pagina se actualizează automat până se finalizează.</p>
+
+        <p><a href="{{ root_path }}/">Înapoi</a></p>
+      </div>
+
+      <footer class="footer" aria-label="Brand">
+        <div class="footer-left">
+          <img
+            class="footer-logo"
+            src="{{ root_path }}/assets/img/vixflotech/icon-vixflo.png"
+            alt="{{ app_brand_name }}"
+            loading="lazy"
+          />
+          <div class="footer-lines">
+            <p class="footer-line1">
+              <span class="footer-brand">{{ app_brand_name }}</span>
+            </p>
+            <p class="footer-line2">
+              <span class="footer-app">{{ app_product_name }}</span>
+              <span class="footer-sep">•</span>
+              <span class="footer-version">V {{ app_version }}</span>
+            </p>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      const jobId = document.body.dataset.jobId;
+      const rootPath = document.body.dataset.rootPath || '';
+      const statusUrl = `${rootPath}/api/jobs/${jobId}`;
+      const fileUrl = `${rootPath}/files/${jobId}`;
+      const statusEl = document.getElementById('status');
+      const doneEl = document.getElementById('done');
+      const errEl = document.getElementById('err');
+      const errMsgEl = document.getElementById('errmsg');
+      const fileLinkEl = document.getElementById('filelink');
+      const filenameEl = document.getElementById('filename');
+
+      async function poll() {
+        try {
+          const res = await fetch(statusUrl);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const data = await res.json();
+
+          statusEl.textContent = data.status;
+          statusEl.setAttribute('data-status', data.status);
+
+          if (data.status === 'done') {
+            doneEl.classList.remove('hidden');
+            fileLinkEl.href = fileUrl;
+            filenameEl.textContent = data.filename ? `Fișier: ${data.filename}` : '';
+            return;
+          }
+
+          if (data.status === 'error') {
+            errEl.classList.remove('hidden');
+            errMsgEl.textContent = data.error || 'Eroare necunoscută';
+            return;
+          }
+
+          setTimeout(poll, 1200);
+        } catch (e) {
+          errEl.classList.remove('hidden');
+          errMsgEl.textContent = String(e);
+        }
+      }
+
+      poll();
+    </script>
+  </body>
+</html>

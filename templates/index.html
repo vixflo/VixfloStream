@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ app_brand_name }} - {{ app_product_name }} - V {{ app_version }}</title>
+    <link rel="icon" href="{{ root_path }}/assets/app-icon.ico" />
+    <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+  </head>
+  <body data-root-path="{{ root_path }}">
+    <main class="container" aria-labelledby="page-title">
+      <header class="brand">
+        <p class="kicker">{{ app_brand_name }}</p>
+        <h1 id="page-title" class="title">{{ app_product_name }}</h1>
+        <p class="subtitle">Descarcă video (MP4) sau audio (MP3) dintr-un link — cu preview și status în timp real.</p>
+      </header>
+
+      <form class="card" action="{{ root_path }}/download" method="post">
+        <div class="field">
+          <label for="url">Link (URL)</label>
+          <input
+            id="url"
+            name="url"
+            type="url"
+            inputmode="url"
+            placeholder="https://..."
+            required
+            autocomplete="off"
+          />
+        </div>
+
+        <section id="preview" class="preview hidden" aria-live="polite" aria-atomic="true">
+          <div class="preview-media">
+            <img id="previewThumb" class="preview-thumb hidden" alt="" loading="lazy" />
+          </div>
+          <div class="preview-body">
+            <p class="preview-kicker" id="previewSource"></p>
+            <h3 class="preview-title" id="previewTitle"></h3>
+            <p class="preview-meta" id="previewMeta"></p>
+            <p class="preview-desc" id="previewDesc"></p>
+            <p class="preview-url">
+              <a id="previewLink" href="#" target="_blank" rel="noreferrer">Deschide în platformă</a>
+            </p>
+            <p class="preview-error hidden" id="previewError"></p>
+          </div>
+        </section>
+
+        <fieldset class="field" aria-labelledby="type-legend">
+          <legend id="type-legend">Ce vrei să descarci?</legend>
+
+          <div class="radio-row">
+            <input id="type-video" name="download_type" type="radio" value="video" checked />
+            <label for="type-video">Video (MP4)</label>
+          </div>
+
+          <div class="radio-row">
+            <input id="type-audio" name="download_type" type="radio" value="audio" />
+            <label for="type-audio">Audio (MP3)</label>
+          </div>
+        </fieldset>
+
+        <div class="field" id="audioFormatField">
+          <label for="audio_format">Format audio</label>
+          <select id="audio_format" name="audio_format">
+            <option value="mp3" selected>MP3 (recomandat)</option>
+            <option value="original">Original (fără conversie)</option>
+          </select>
+          <p class="hint">Dacă MP3 e selectat, e nevoie de FFmpeg.</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3v10m0 0l4-4m-4 4l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          Descarcă
+        </button>
+
+        <p class="hint" role="note">Pentru unele clipuri (private/age/geo), poate fi nevoie de cookies.</p>
+      </form>
+
+      <section class="card" aria-labelledby="help-title">
+        <h2 id="help-title">Sfaturi rapide</h2>
+        <ul>
+          <li>Dacă un clip este privat / necesită login, e posibil să nu meargă fără cookies.</li>
+          <li>Unele platforme blochează frecvent; încearcă alt link sau alt format.</li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="about-title">
+        <h2 id="about-title">🎬 {{ app_product_name }}</h2>
+        <p class="muted">Soluția completă pentru descărcarea conținutului audio-video de pe platformele tale preferate!</p>
+
+        <h3 class="h3">✨ Caracteristici principale</h3>
+        <ul class="feature-list">
+          <li>Descărcare video în calitate HD/Full HD/4K (MP4) — dacă sursa oferă aceste variante.</li>
+          <li>Conversie audio: MP3 (cu FFmpeg) sau păstrare în format „Original” (fără conversie).</li>
+          <li>Multi-platformă: YouTube, Facebook, TikTok, Instagram, X/Twitter, Vimeo și multe altele (prin yt-dlp).</li>
+          <li>Preview înaintea descărcării — vezi exact ce salvezi.</li>
+          <li>Coada de descărcări + progres live; suportă mai multe joburi (2 în paralel).</li>
+          <li>Playlist-uri: dacă linkul este un playlist, yt-dlp poate descărca mai multe elemente (în funcție de platformă).</li>
+        </ul>
+
+        <h3 class="h3">🚀 De ce să alegi {{ app_product_name }}?</h3>
+        <ul class="feature-list">
+          <li>⚡ Performanță superioară — optimizat pentru uz local și pornire rapidă.</li>
+          <li>🎯 Calitate păstrată — descarcă varianta disponibilă de la sursă.</li>
+          <li>🔒 Sigur și privat — fără tracking, fără reclame intruzive; rulează pe PC-ul tău.</li>
+          <li>🎨 Interfață modernă — design intuitiv și ușor de utilizat.</li>
+        </ul>
+
+        <p class="muted">Un produs dezvoltat de {{ app_brand_name }}. Descarcă acum și bucură-te de conținutul tău preferat offline, oricând și oriunde!</p>
+      </section>
+
+      <footer class="footer" aria-label="Brand">
+        <div class="footer-left">
+          <img
+            class="footer-logo"
+            src="{{ root_path }}/assets/img/vixflotech/icon-vixflo.png"
+            alt="{{ app_brand_name }}"
+            loading="lazy"
+          />
+          <div class="footer-lines">
+            <p class="footer-line1">
+              <span class="footer-brand">{{ app_brand_name }}</span>
+            </p>
+            <p class="footer-line2">
+              <span class="footer-app">{{ app_product_name }}</span>
+              <span class="footer-sep">•</span>
+              <span class="footer-version">V {{ app_version }}</span>
+            </p>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      const rootPath = document.body.dataset.rootPath || '';
+      const urlInput = document.getElementById('url');
+
+      const previewEl = document.getElementById('preview');
+      const previewThumb = document.getElementById('previewThumb');
+      const previewTitle = document.getElementById('previewTitle');
+      const previewMeta = document.getElementById('previewMeta');
+      const previewSource = document.getElementById('previewSource');
+      const previewLink = document.getElementById('previewLink');
+      const previewError = document.getElementById('previewError');
+      const previewDesc = document.getElementById('previewDesc');
+
+      const audioFormatField = document.getElementById('audioFormatField');
+      const typeVideo = document.getElementById('type-video');
+      const typeAudio = document.getElementById('type-audio');
+
+      function setAudioFieldVisibility() {
+        audioFormatField.style.display = typeAudio.checked ? 'block' : 'none';
+      }
+
+      typeVideo.addEventListener('change', setAudioFieldVisibility);
+      typeAudio.addEventListener('change', setAudioFieldVisibility);
+      setAudioFieldVisibility();
+
+      let inflight = null;
+      let timer = null;
+      let lastValue = '';
+
+      function resetPreview() {
+        previewEl.classList.add('hidden');
+        previewError.classList.add('hidden');
+        previewError.textContent = '';
+        previewThumb.removeAttribute('src');
+        previewThumb.classList.add('hidden');
+        previewTitle.textContent = '';
+        previewMeta.textContent = '';
+        previewDesc.textContent = '';
+        previewSource.textContent = '';
+        previewLink.href = '#';
+      }
+
+      async function fetchPreview(url) {
+        if (!url) return;
+        if (inflight) inflight.abort();
+        const controller = new AbortController();
+        inflight = controller;
+
+        try {
+          const res = await fetch(`${rootPath}/api/preview?url=${encodeURIComponent(url)}`, {
+            signal: controller.signal,
+          });
+          const data = await res.json();
+
+          previewEl.classList.remove('hidden');
+
+          if (!data.ok) {
+            previewThumb.classList.add('hidden');
+            previewTitle.textContent = 'Preview indisponibil';
+            previewMeta.textContent = '';
+            previewDesc.textContent = '';
+            previewSource.textContent = '';
+            previewError.classList.remove('hidden');
+            previewError.textContent = data.error || 'Nu am putut prelua informațiile.';
+            return;
+          }
+
+          previewError.classList.add('hidden');
+          if (data.warning) {
+            previewError.classList.remove('hidden');
+            previewError.textContent = String(data.warning);
+          }
+          const title = data.title || 'Fără titlu';
+          previewTitle.textContent = title;
+
+          const parts = [];
+          if (data.uploader) parts.push(data.uploader);
+          if (data.duration_text) parts.push(data.duration_text);
+          previewMeta.textContent = parts.join(' • ');
+
+          const desc = (data.description || '').trim();
+          previewDesc.textContent = desc ? (desc.length > 240 ? `${desc.slice(0, 240)}…` : desc) : '';
+
+          previewSource.textContent = data.extractor ? String(data.extractor).toUpperCase() : '';
+          previewLink.href = data.webpage_url || data.url || '#';
+
+          if (data.thumbnail) {
+            previewThumb.src = data.thumbnail;
+            previewThumb.classList.remove('hidden');
+            previewThumb.alt = title;
+          } else {
+            previewThumb.classList.add('hidden');
+          }
+        } catch (e) {
+          if (String(e).includes('AbortError')) return;
+          previewEl.classList.remove('hidden');
+          previewError.classList.remove('hidden');
+          previewError.textContent = 'Eroare de rețea la preview.';
+        }
+      }
+
+      function schedule() {
+        const v = urlInput.value.trim();
+        if (v === lastValue) return;
+        lastValue = v;
+
+        if (!v || v.length < 8) {
+          resetPreview();
+          return;
+        }
+
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => fetchPreview(v), 500);
+      }
+
+      urlInput.addEventListener('input', schedule);
+      urlInput.addEventListener('blur', schedule);
+    </script>
+  </body>
+</html>

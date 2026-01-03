@@ -1,0 +1,48 @@
+{
+  "name": "vixflostream-downloader-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "productName": "VixfloStream Downloader",
+    "appId": "ro.vixflodev.vixflostreamdownloader",
+    "directories": {
+      "output": "dist"
+    },
+    "extraResources": [
+      {
+        "from": "../dist/VixfloStreamBackend.exe",
+        "to": "backend/VixfloStreamBackend.exe"
+      }
+    ],
+    "files": [
+      "src/**",
+      "package.json"
+    ],
+    "win": {
+      "icon": "../assets/app-icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "../assets/app-icon.ico",
+      "uninstallerIcon": "../assets/app-icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "include": "build/installer.nsh"
+    }
+  }
+}
