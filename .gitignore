@@ -25,3 +25,10 @@ desktop-electron/node_modules/
 
 # Bundled ffmpeg distribution (large; keep out of source repo)
 ffmpeg/
+
+# Downloaded ffmpeg binaries (kept out of git, but bundled into EXEs at build time)
+tools/ffmpeg/bin/
+tools/ffmpeg/_cache/
+tools/ffmpeg/_extract/
+tools/ffmpeg/*.zip
+tools/ffmpeg/*.7z

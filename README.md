@@ -13,6 +13,12 @@ Aplicație locală (Windows) care descarcă video (MP4) sau audio (MP3) din link
 
 3. (Opțional, recomandat pentru MP3) Instalează **FFmpeg** și asigură-te că `ffmpeg` este în `PATH`.
 
+Alternativ (recomandat, fără să ții binarele în Git), poți rula scriptul care descarcă FFmpeg local în `tools/ffmpeg/bin/`:
+
+```bat
+tools\ffmpeg\ensure_ffmpeg.bat
+```
+
 ## Rulare
 
 - Dublu click pe `run.bat` sau rulează:
@@ -62,6 +68,8 @@ Construiește un EXE care pornește serverul local și îți deschide automat î
 .\build_exe.bat
 ```
 
+Notă: scriptul de build rulează automat `tools\ffmpeg\ensure_ffmpeg.bat` și include FFmpeg în EXE.
+
 Rezultatul este în `dist\VixfloStreamDownloader.exe`.
 
 ### 2) Server-only (pentru Apache/XAMPP) – EXE (PyInstaller)
@@ -71,6 +79,8 @@ Construiește backend-ul (fără auto-open browser):
 ```bat
 .\build_backend_exe.bat
 ```
+
+Notă: scriptul de build rulează automat `tools\ffmpeg\ensure_ffmpeg.bat` și include FFmpeg în EXE.
 
 Rezultatul este în `dist\VixfloStreamBackend.exe` (implicit pornește pe `127.0.0.1:8000`).
 

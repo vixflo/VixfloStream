@@ -5,7 +5,7 @@ a = Analysis(
     ['desktop_launcher.py'],
     pathex=[],
     binaries=[],
-    datas=[('templates', 'templates'), ('static', 'static'), ('assets', 'assets'), ('ffmpeg', 'ffmpeg')],
+    datas=[('templates', 'templates'), ('static', 'static'), ('assets', 'assets'), ('tools/ffmpeg', 'tools/ffmpeg')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
