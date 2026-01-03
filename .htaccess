@@ -1,4 +1,4 @@
-# AVEProiect - reverse proxy către serverul FastAPI (uvicorn) pe 127.0.0.1:8000
+# VixfloStream - reverse proxy către serverul FastAPI (uvicorn) pe 127.0.0.1:8000
 # Necesită module Apache: rewrite, proxy, proxy_http, headers
 
 RewriteEngine On
@@ -9,7 +9,7 @@ Options -Indexes
 # Trimite informații către aplicație despre prefix și schema HTTPS
 RequestHeader set X-Forwarded-Proto "https"
 RequestHeader set X-Forwarded-Host "vixflodev.ro"
-RequestHeader set X-Forwarded-Prefix "/AVEProiect"
+RequestHeader set X-Forwarded-Prefix "/VixfloStream"
 
 # Proxy pentru toate rutele către FastAPI
 # IMPORTANT: când accesezi /AVEProiect/ ca director, Apache poate cere automat /AVEProiect/index.php
@@ -17,6 +17,9 @@ RequestHeader set X-Forwarded-Prefix "/AVEProiect"
 
 # Servește fișierele statice locale (CSS) direct din Apache, nu prin proxy.
 RewriteRule ^static/ - [L]
+
+# Servește și imaginile/asset-urile locale direct din Apache (logo, icoane).
+RewriteRule ^assets/ - [L]
 
 RewriteRule ^index\.php$ http://127.0.0.1:8000/ [P,L]
 

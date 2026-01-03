@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ app_brand_name }} - {{ app_product_name }} - V {{ app_version }}</title>
-    <link rel="icon" href="{{ root_path }}/assets/app-icon.ico" />
-    <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+    <link rel="icon" href="{{ request.url_for('assets', path='app-icon.ico') }}" />
+    <link rel="stylesheet" href="{{ request.url_for('static', path='style.css') }}" />
   </head>
   <body data-root-path="{{ root_path }}">
     <main class="container" aria-labelledby="page-title">
@@ -118,7 +118,7 @@
         <div class="footer-left">
           <img
             class="footer-logo"
-            src="{{ root_path }}/assets/img/vixflotech/icon-vixflo.png"
+            src="{{ request.url_for('assets', path='img/vixflotech/icon-vixflo.png') }}"
             alt="{{ app_brand_name }}"
             loading="lazy"
           />
