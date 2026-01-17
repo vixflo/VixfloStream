@@ -414,14 +414,8 @@ def _run_ytdlp(job_id: str) -> None:
         # Avoid failing on container "fixup" steps that require ffmpeg.
         common_opts["fixup"] = "never"
 
-    if _looks_like_youtube(job.url):
-        # Use multiple clients; yt-dlp will pick working formats automatically.
-        # Avoid clients requiring PO Token (android/ios HTTPS need tokens now).
-        common_opts["extractor_args"] = {
-            "youtube": {
-                "player_client": ["android_sdk", "web_safari", "web"],
-            }
-        }
+    # No YouTube-specific config needed; yt-dlp handles client selection automatically.
+    # Forcing specific player_client can cause PO Token issues.
 
     if job.download_type == "audio":
         # MP3 needs FFmpeg. If FFmpeg isn't installed, we still download audio
