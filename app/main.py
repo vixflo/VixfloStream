@@ -415,12 +415,11 @@ def _run_ytdlp(job_id: str) -> None:
         common_opts["fixup"] = "never"
 
     if _looks_like_youtube(job.url):
-        # Use web client and skip formats requiring PO Token (android client).
-        # This avoids HTTP 403 errors from android client without PO Token.
+        # Use multiple clients; yt-dlp will pick working formats automatically.
+        # Avoid clients requiring PO Token (android/ios HTTPS need tokens now).
         common_opts["extractor_args"] = {
             "youtube": {
-                "player_client": ["ios", "web"],
-                "skip": ["hls", "dash"],
+                "player_client": ["android_sdk", "web_safari", "web"],
             }
         }
 
