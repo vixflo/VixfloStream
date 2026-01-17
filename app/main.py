@@ -415,8 +415,14 @@ def _run_ytdlp(job_id: str) -> None:
         common_opts["fixup"] = "never"
 
     if _looks_like_youtube(job.url):
-        # Reduce dependency on JS runtimes / SABR by preferring android client.
-        common_opts["extractor_args"] = {"youtube": {"player_client": ["android", "web_safari"]}}
+        # Use web client and skip formats requiring PO Token (android client).
+        # This avoids HTTP 403 errors from android client without PO Token.
+        common_opts["extractor_args"] = {
+            "youtube": {
+                "player_client": ["ios", "web"],
+                "skip": ["hls", "dash"],
+            }
+        }
 
     if job.download_type == "audio":
         # MP3 needs FFmpeg. If FFmpeg isn't installed, we still download audio
