@@ -23,6 +23,5 @@ RewriteRule ^assets/ - [L]
 
 RewriteRule ^index\.php$ http://127.0.0.1:8000/ [P,L]
 
-# Proxy toate cererile către backend și păstrează headerele
+# Proxy toate cererile către backend
 RewriteRule ^(.*)$ http://127.0.0.1:8000/$1 [P,L]
-ProxyPreserveHost On
