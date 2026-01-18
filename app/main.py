@@ -91,6 +91,19 @@ class ForwardedPrefixMiddleware(BaseHTTPMiddleware):
         self._header_name = header_name
 
     async def dispatch(self, request: Request, call_next):
+        # Handle X-Forwarded-Proto (https from Apache)
+        proto = request.headers.get("x-forwarded-proto")
+        if proto:
+            request.scope["scheme"] = proto
+
+        # Handle X-Forwarded-Host (vixflodev.ro from Apache)
+        host = request.headers.get("x-forwarded-host")
+        if host:
+            # Update server tuple (host, port) - use 443 for https
+            port = 443 if request.scope.get("scheme") == "https" else 80
+            request.scope["server"] = (host, port)
+
+        # Handle X-Forwarded-Prefix (/VixfloStream)
         prefix = request.headers.get(self._header_name)
         if prefix:
             prefix = prefix.strip()
