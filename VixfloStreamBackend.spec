@@ -5,7 +5,7 @@ a = Analysis(
     ['server_launcher.py'],
     pathex=[],
     binaries=[],
-    datas=[('templates', 'templates'), ('static', 'static'), ('assets', 'assets'), ('tools/ffmpeg', 'tools/ffmpeg')],
+    datas=[('templates', 'templates'), ('static', 'static'), ('assets', 'assets'), ('tools\\\\ffmpeg', 'tools\\\\ffmpeg')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
